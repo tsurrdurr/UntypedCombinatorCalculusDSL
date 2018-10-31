@@ -11,8 +11,6 @@ namespace Kombinator.Models
         public Func<Applica, Term> Action = DefaultNoAction;
         private static Term DefaultNoAction(Term input) => input;
 
-        public Term NextArgument => this.Right;
-
         public Applica(string funcName, Term argument) : base(funcName)
         {
             this.Right = argument;

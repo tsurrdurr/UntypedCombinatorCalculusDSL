@@ -37,6 +37,7 @@ namespace Kombinator.Models
         {
             this.Left = leftTerm;
             this.Right = rightTerm;
+            this.stringRepresentation = leftTerm.ToString();
             MyLogger.Log("Term 2 args invoked");
         }
 
@@ -46,6 +47,8 @@ namespace Kombinator.Models
             this.Right = null;
             MyLogger.Log("Term 1 arg invoked");
         }
+
+        public Term NextArgument => this._right;
 
         private Term()
         {
@@ -59,11 +62,15 @@ namespace Kombinator.Models
             var pointer = term;
             while (pointer.Right != null)
             {
-                pointer.Reduce();
-                pointer = pointer.Right;
+                pointer = pointer.Reduce();
             }
-            MyLogger.Log(term.Stringify());
+            MyLogger.Log(pointer.Stringify());
             return term;
+        }
+
+        public override string ToString()
+        {
+            return stringRepresentation;
         }
 
         public string Stringify()
