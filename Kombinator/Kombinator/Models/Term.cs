@@ -56,6 +56,18 @@ namespace Kombinator.Models
             MyLogger.Log("Term private constructor invoked");
         }
 
+        public static Term BuildWith(Term[] args)
+        {
+            if (args.Length == 0) return null;
+            var rootEntity = args.First();
+            for (int i = 0; i < args.Length; i++)
+            {
+                var next = (i + 1 < args.Length) ? args[i + 1] : null;
+                args[i].Right = next;
+            }
+            return rootEntity;
+        }
+
         public static Term EvaluateWith(Term[] args)
         {
             var term = BuildWith(args);
@@ -101,17 +113,6 @@ namespace Kombinator.Models
             return this;
         }
 
-        public static Term BuildWith(Term[] args)
-        {
-            if (args.Length == 0) return null;
-            var rootEntity = args.First();
-            for (int i = 0; i < args.Length; i++)
-            {
-                var next = (i + 1 < args.Length) ? args[i + 1] : null;
-                args[i].Right = next;
-            }
-            return rootEntity;
-        }
 
         protected Term(string name)
         {
