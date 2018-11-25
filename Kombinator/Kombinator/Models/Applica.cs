@@ -13,7 +13,7 @@ namespace Kombinator.Models
 
         public Applica(string funcName, Term argument) : base(funcName)
         {
-            this.Right = argument;
+            Right = argument ?? Right;
         }
 
         public override Term Reduce() => Action(this);

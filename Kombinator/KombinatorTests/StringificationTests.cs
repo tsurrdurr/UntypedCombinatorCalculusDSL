@@ -51,5 +51,20 @@ namespace KombinatorTests
             Assert.AreEqual(expected, result);
         }
 
+        [Test]
+        public void StringifyLongTerm_Input5ElementArray_Returns5ElementTermRepresentation()
+        {
+            var KTerm = CombinatorK.ConstructCombinator();
+            var name1 = "drake";
+            var term1 = new Constant(name1);
+            var name2 = "kanye";
+            var term2 = new Constant(name2);
+            string expected = $"((((K,K),K),{name1}),{name2})";
+            var term = Term.BuildWith(new Term[]
+            {
+                KTerm, KTerm, KTerm, term1, term2
+            });
+        }
+
     }
 }

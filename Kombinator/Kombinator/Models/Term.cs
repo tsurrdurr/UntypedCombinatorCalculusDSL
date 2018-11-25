@@ -37,6 +37,7 @@ namespace Kombinator.Models
         protected Term(string name)
         {
             StringRepresentation = name;
+            if (this is VoidTerm == false) Right = new VoidTerm();
         }
 
         protected Term(object value)
