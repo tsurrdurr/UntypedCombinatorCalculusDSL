@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Built-In\CombinatorI.cs" />
     <Compile Include="Built-In\CombinatorK.cs" />
     <Compile Include="Models\Applica.cs" />
     <Compile Include="Models\Constant.cs" />

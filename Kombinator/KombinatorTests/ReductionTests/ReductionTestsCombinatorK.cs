@@ -8,23 +8,14 @@ using Kombinator.Models;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace KombinatorTests
+namespace KombinatorTests.ReductionTests
 {
     [TestFixture]
-    class ReductionTests
+    class ReductionTestsCombinatorK
     {
-        [Test]
-        public void TermReductionTest_InputNormalForms_ReturnsSameStringificationResult()
-        {
-            var term1 = CombinatorK.ConstructCombinator();
-            var expected = term1.Stringify();
-            term1.TryReduce();
-            var result = term1.Stringify();
-            Assert.AreEqual(expected, result);
-        }
 
         [Test]
-        public void TermReductionTest_InputNormalFormsThroughBuildWith_ReturnsSameStringificationResult()
+        public void TermReductionTest_InputCombinatorK_ReturnsSameStringificationResult()
         {
             var term1 = CombinatorK.ConstructCombinator();
             var expected = term1.Stringify();
