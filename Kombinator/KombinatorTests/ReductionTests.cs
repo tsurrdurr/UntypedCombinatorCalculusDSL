@@ -70,6 +70,25 @@ namespace KombinatorTests
             Assert.AreEqual(expected, result.Stringify());
         }
 
+        [Test]
+        public void TermReductionTest_InputReducableNonLinearlyTermWith2KCombinators_ReturnsReducedTerm()
+        {
+            var kTerm = CombinatorK.ConstructCombinator();
+            var kTerm1 = CombinatorK.ConstructCombinator();
 
+            string name3 = "egg";
+            var term3 = new Constant(name3);
+            string name4 = "long egg";
+            var term4 = new Constant(name4);
+            string name5 = "applause";
+            var term5 = new Constant(name5);
+            string name6 = "gone";
+            var term6 = new Constant(name6);
+
+
+            var expected = Term.BuildWith(new Term[] { term3, term5 }).Stringify();
+            var result = Term.EvaluateWith(new Term[] {kTerm, term3, term4, kTerm1, term5, term6 });
+            Assert.AreEqual(expected, result.Stringify());
+        }
     }
 }

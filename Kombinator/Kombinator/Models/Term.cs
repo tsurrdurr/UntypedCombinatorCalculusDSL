@@ -46,6 +46,7 @@ namespace Kombinator.Models
             ContainedObject = value;
         }
 
+
         private Term()
         {
             this.Left = this.Right = null;
@@ -67,21 +68,28 @@ namespace Kombinator.Models
 
         public static Term EvaluateWith(Term[] args)
         {
-            var term = BuildWith(args);
-            var pointer = term;
-            while (pointer.HasRedex)
+            var builtTerm = BuildWith(args);
+            PerformRecursiveReduction(ref builtTerm);
+            MyLogger.Log(builtTerm.Stringify());
+            return builtTerm;
+        }
+
+        private static Term PerformRecursiveReduction(ref Term pointer)
+        {
+            if (pointer.HasRedex)
             {
                 var result = pointer.TryReduce();
                 if (result.Success)
                 {
                     pointer = result.ResultTerm;
+                    PerformRecursiveReduction(ref pointer);
                 }
                 else
                 {
-                    pointer = pointer.Right;
+                    var newPointer = pointer.Right;
+                    pointer.Right = PerformRecursiveReduction(ref newPointer);
                 }
             }
-            MyLogger.Log(pointer.Stringify());
             return pointer;
         }
 
@@ -102,13 +110,17 @@ namespace Kombinator.Models
             {
                 return result = "(" + subject + ",())";
             }
-            while (subject.HasRedex)
+
+            if (subject is VoidTerm == false)
             {
-                result = "(" + result;
-                result += "," + subject.StringRepresentation + ")";
-                subject = subject.Right;
+                while (subject.HasRedex)
+                {
+                    result = "(" + result;
+                    result += "," + subject.StringRepresentation + ")";
+                    subject = subject.Right;
+                }
+                result = "(" + result + "," + subject + ")";
             }
-            result = "(" + result + "," + subject + ")";
             return result;
         }
 
