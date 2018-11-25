@@ -7,8 +7,17 @@ using Kombinator.Models;
 
 namespace Kombinator.Built_In
 {
-    class CombinatorK
+    public class CombinatorK
     {
+        public static Term ConstructCombinator()
+        {
+            var kCombinator = new Applica("K", null)
+            {
+                Action = Action
+            };
+            return kCombinator;
+        }
+
         public static Term Action(Applica term)
         {
             if (term.HasRedex && term.NextArgument.HasRedex)

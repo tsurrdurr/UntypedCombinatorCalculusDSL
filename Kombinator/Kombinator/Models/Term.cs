@@ -93,7 +93,7 @@ namespace Kombinator.Models
             }
             else
             {
-                return result = "(" + subject.Left + ",())";
+                return result = "(" + subject + ",())";
             }
             while (subject.HasRedex)
             {
