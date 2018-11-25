@@ -47,6 +47,7 @@
     <Compile Include="Models\Applica.cs" />
     <Compile Include="Models\Constant.cs" />
     <Compile Include="Models\Variable.cs" />
+    <Compile Include="Models\VoidTerm.cs" />
     <Compile Include="Traceability\MyLogger.cs" />
     <Compile Include="Models\Term.cs" />
     <Compile Include="Program.cs" />

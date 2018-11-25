@@ -16,55 +16,51 @@ namespace Kombinator.Models
             {
                 _left = value;
             }
+            
         }
 
-        protected Term Right
-        {
-            get => _right;
-            set
-            {
-                _right = value;
-            }
-        }
+        protected Term Right { get; set; }
 
         private Term _left;
-        private Term _right;
-        protected string stringRepresentation = "";
+        protected string StringRepresentation = "";
 
-        protected object containedObject;
+        protected object ContainedObject;
 
         public Term(Term leftTerm, Term rightTerm)
         {
             this.Left = leftTerm;
             this.Right = rightTerm;
-            this.stringRepresentation = leftTerm.ToString();
+            this.StringRepresentation = leftTerm.ToString();
             MyLogger.Log("Term 2 args invoked");
         }
 
-        public Term(Term onlyTerm)
+        protected Term(string name)
         {
-            this.Left = onlyTerm;
-            this.Right = null;
-            MyLogger.Log("Term 1 arg invoked");
+            StringRepresentation = name;
         }
 
-        public Term NextArgument => this._right;
+        protected Term(object value)
+        {
+            StringRepresentation = value.ToString();
+            ContainedObject = value;
+        }
 
         private Term()
         {
             this.Left = this.Right = null;
-            MyLogger.Log("Term private constructor invoked");
         }
 
         public static Term BuildWith(Term[] args)
         {
-            if (args.Length == 0) return null;
-            var rootEntity = args.First();
+            var rootEntity = args.FirstOrDefault();
+            if (rootEntity == null) return new VoidTerm();
             for (int i = 0; i < args.Length; i++)
             {
                 var next = (i + 1 < args.Length) ? args[i + 1] : null;
                 args[i].Right = next;
             }
+            var lastTerm = args[args.Length - 1];
+            lastTerm = Terminate(lastTerm);
             return rootEntity;
         }
 
@@ -72,38 +68,41 @@ namespace Kombinator.Models
         {
             var term = BuildWith(args);
             var pointer = term;
-            while (pointer.Right != null)
+            while (pointer.HasRedex)
             {
                 pointer = pointer.Reduce();
             }
             MyLogger.Log(pointer.Stringify());
-            return term;
+            return pointer;
         }
 
-        public override string ToString()
-        {
-            return stringRepresentation;
-        }
+        public Term NextArgument => this.Right;
+
+        public override string ToString() => StringRepresentation;
+        
 
         public string Stringify()
         {
             string result = "";
-            int smileys = 0;
-            var hero = this;
-
-            while (true)
+            var subject = this;
+            if (subject is VoidTerm) return "()";
+            if (subject.HasRedex)
             {
-                result += "(" + hero.stringRepresentation + ",";
-                smileys++;
-
-                if (!hero.HasRedex) break;
-                hero = hero.Right;
+                result += "(" + subject + "," + subject.Right + ")";
+                subject = subject.Right.Right;
             }
-            while (smileys != 0)
+            else
             {
-                result += ")";
-                smileys--;
+                return result = "(" + subject.Left + ",())";
             }
+            while (subject.HasRedex)
+            {
+                result = "(" + result + subject.StringRepresentation;
+                if(subject == null) continue;
+                result += "," + subject.StringRepresentation + "),";
+                subject = subject.Right;
+            }
+            result = "(" + result + "," + subject + ")";
             return result;
         }
 
@@ -113,22 +112,19 @@ namespace Kombinator.Models
             return this;
         }
 
-
-        protected Term(string name)
-        {
-            stringRepresentation = name;
-        }
-
-        protected Term(object value)
-        {
-            stringRepresentation = value.ToString();
-            containedObject = value;
-        }
-
-        public bool HasRedex => _right != null;
+        public bool HasRedex => !(Right is VoidTerm);
 
         public virtual Term Reduce() => this;
 
+        private static Term Terminate(Term term)
+        {
+            if (term.Right == null)
+            {
+                term.Right = new VoidTerm();
+            }
+            else throw new ArgumentException($"{nameof(Term.Terminate)} - term provided has value in its right slot and is not terminal.");
+            return term;
+        }
     }
 
 }
