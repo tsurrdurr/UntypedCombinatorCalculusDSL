@@ -16,10 +16,13 @@ namespace KombinatorTests.ReductionTests
         [Test]
         public void TermReductionTest_InputCombinatorI_ReturnsSameStringification()
         {
+
             var term1 = CombinatorI.ConstructCombinator();
-            var expected = term1.Stringify();
-            var reductionResult = Term.BuildWith(new Term[] { term1 }).TryReduce();
-            var result = reductionResult.ResultTerm.Stringify();
+            var buildResult = Term.BuildWith(new Term[] { term1 });
+            var expected = buildResult.Stringify();
+       
+            var evalResult = Term.EvaluateWith(new Term[] { term1 });
+            var result = evalResult.Stringify();
             Assert.AreEqual(expected, result);
         }
 

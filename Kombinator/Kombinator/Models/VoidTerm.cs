@@ -10,7 +10,7 @@ namespace Kombinator.Models
     {
         public VoidTerm() : base((string) null)
         {
-            this.StringRepresentation = "|end|";
+            this.StringRepresentation = "()";
         }
     }
 }

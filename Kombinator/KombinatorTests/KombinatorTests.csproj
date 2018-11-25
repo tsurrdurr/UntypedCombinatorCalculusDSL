@@ -50,6 +50,7 @@
     <Compile Include="ReductionTests\ReductionTestsBasic.cs" />
     <Compile Include="ReductionTests\ReductionTestsCombinatorI.cs" />
     <Compile Include="ReductionTests\ReductionTestsCombinatorK.cs" />
+    <Compile Include="ReductionTests\ReductionTestsCombinatorS.cs" />
     <Compile Include="StringificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

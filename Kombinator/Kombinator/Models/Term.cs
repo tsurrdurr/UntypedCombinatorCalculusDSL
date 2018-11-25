@@ -16,21 +16,20 @@ namespace Kombinator.Models
             {
                 _left = value;
             }
-            
         }
 
         public Term Right { get; set; }
 
         private Term _left;
         protected string StringRepresentation = "";
-
+        protected string TestRepresentation => "(" + Left + "," + Right + ")";
         protected object ContainedObject;
 
         public Term(Term leftTerm, Term rightTerm)
         {
             this.Left = leftTerm;
             this.Right = rightTerm;
-            this.StringRepresentation = leftTerm.ToString();
+            this.StringRepresentation = "(" + leftTerm + "," + rightTerm + ")";
             MyLogger.Log("Term 2 args invoked");
         }
 
@@ -46,7 +45,6 @@ namespace Kombinator.Models
             ContainedObject = value;
         }
 
-
         private Term()
         {
             this.Left = this.Right = null;
@@ -54,16 +52,32 @@ namespace Kombinator.Models
 
         public static Term BuildWith(Term[] args)
         {
-            var rootEntity = args.FirstOrDefault();
-            if (rootEntity == null) return new VoidTerm();
-            for (int i = 0; i < args.Length; i++)
-            {
-                var next = (i + 1 < args.Length) ? args[i + 1] : null;
-                args[i].Right = next;
-            }
-            var lastTerm = args[args.Length - 1];
-            lastTerm = Terminate(lastTerm);
+            var firstElement = args.FirstOrDefault();
+            if (firstElement == null) return new VoidTerm();
+            var rootEntity = new Term(firstElement, new VoidTerm());
+            AppendRecursively(ref rootEntity, args);
             return rootEntity;
+        }
+
+        private static Term AppendRecursively(ref Term term, Term[] args)
+        {
+            var remainingArgs = args.Reverse().Take(args.Length - 1).Reverse().ToArray();
+            if (remainingArgs.Length > 0)
+            {
+                if (term.Right is VoidTerm)
+                {
+                    term.Right = remainingArgs[0];
+                    term.StringRepresentation = term.TestRepresentation;
+                }
+                else
+                {
+                    term = new Term(term, remainingArgs[0]);
+                    term.StringRepresentation = term.TestRepresentation;
+                }
+                AppendRecursively(ref term, remainingArgs);
+            }
+
+            return term;
         }
 
         public static Term EvaluateWith(Term[] args)
@@ -94,10 +108,16 @@ namespace Kombinator.Models
         }
 
         public override string ToString() => StringRepresentation;
-        
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
 
         public string Stringify()
         {
+            return this.TestRepresentation;
             string result = "";
             var subject = this;
             if (subject is VoidTerm) return "()";

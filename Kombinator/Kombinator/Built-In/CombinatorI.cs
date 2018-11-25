@@ -11,11 +11,11 @@ namespace Kombinator.Built_In
     {
         public static Term ConstructCombinator()
         {
-            var kCombinator = new Applica("I", null)
+            var iCombinator = new Applica("I", null)
             {
                 Action = Action
             };
-            return kCombinator;
+            return iCombinator;
         }
 
         public static ReductionResult Action(Term term)

@@ -11,7 +11,7 @@ namespace KombinatorTests
         [Test]
         public void StringiftyEmpty_InputEmptyArray_ReturnsEmpryTermRepresentation()
         {
-            string expected = "()";
+            string expected = "(,)";
             var term = Term.BuildWith(new Term[] { });
             var result = term.Stringify();
             Assert.AreEqual(result, expected);
@@ -82,6 +82,20 @@ namespace KombinatorTests
             var result = Term.BuildWith(new Term[]
                 {kTerm, kTerm1, term3, term4, term5});
             Assert.AreEqual(expected, result.Stringify());
+        }
+
+        [Test]
+        public void StringifyComplexTerm_Input2Tuples_ReturnsCorrectStringificaion()
+        {
+            var term2 = new Constant("x");
+            var term3 = new Constant("y");
+            var term4 = new Constant("z");
+            var term4a = new Constant("z");
+            var superterm1 = new Term(term2, term4);
+            var superterm2 = new Term(term3, term4a);
+            var expected = $"(({term2},{term4}),({term3},{term4a}))";
+            var result = Term.BuildWith(new Term[] { superterm1, superterm2 }).Stringify();
+            Assert.AreEqual(expected, result);
         }
     }
 }
