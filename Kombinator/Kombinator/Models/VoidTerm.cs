@@ -8,7 +8,7 @@ namespace Kombinator.Models
 {
     class VoidTerm : Term
     {
-        public VoidTerm() : base(null)
+        public VoidTerm() : base((string) null)
         {
             this.StringRepresentation = "|end|";
         }

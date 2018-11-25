@@ -18,15 +18,15 @@ namespace Kombinator.Built_In
             return kCombinator;
         }
 
-        public static Term Action(Applica term)
+        public static ReductionResult Action(Term term)
         {
-            if (term.HasRedex && term.NextArgument.HasRedex)
+            if (term.HasRedex && term.Right.HasRedex)
             {
-                var leftTerm = term.NextArgument;
-                var rightTerm = term.NextArgument?.NextArgument?.NextArgument;
-                return new Term(leftTerm, rightTerm);
+                var newTerm = term.Right;
+                newTerm.Right = term.Right?.Right?.Right ?? new VoidTerm();
+                return new ReductionResult(newTerm, true);
             }
-            else return term;
+            else return new ReductionResult(term);
         }
     }
 }

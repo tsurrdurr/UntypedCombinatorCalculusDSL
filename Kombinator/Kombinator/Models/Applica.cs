@@ -8,15 +8,15 @@ namespace Kombinator.Models
 {
     public class Applica : Term
     {
-        public Func<Applica, Term> Action = DefaultNoAction;
-        private static Term DefaultNoAction(Term input) => input;
+        public Func<Applica, ReductionResult> Action = DefaultNoAction;
+        private static ReductionResult DefaultNoAction(Applica app) => new ReductionResult(app, false);
 
         public Applica(string funcName, Term argument) : base(funcName)
         {
             Right = argument ?? Right;
         }
 
-        public override Term Reduce() => Action(this);
+        public override ReductionResult TryReduce() => Action(this);
     }
 
 }

@@ -9,7 +9,7 @@ namespace Kombinator.Models
 {
     public class Term
     {
-        protected Term Left
+        public Term Left
         {
             get => _left ?? (_left = new Term());
             set
@@ -19,7 +19,7 @@ namespace Kombinator.Models
             
         }
 
-        protected Term Right { get; set; }
+        public Term Right { get; set; }
 
         private Term _left;
         protected string StringRepresentation = "";
@@ -71,13 +71,19 @@ namespace Kombinator.Models
             var pointer = term;
             while (pointer.HasRedex)
             {
-                pointer = pointer.Reduce();
+                var result = pointer.TryReduce();
+                if (result.Success)
+                {
+                    pointer = result.ResultTerm;
+                }
+                else
+                {
+                    pointer = pointer.Right;
+                }
             }
             MyLogger.Log(pointer.Stringify());
             return pointer;
         }
-
-        public Term NextArgument => this.Right;
 
         public override string ToString() => StringRepresentation;
         
@@ -98,9 +104,8 @@ namespace Kombinator.Models
             }
             while (subject.HasRedex)
             {
-                result = "(" + result + subject.StringRepresentation;
-                if(subject == null) continue;
-                result += "," + subject.StringRepresentation + "),";
+                result = "(" + result;
+                result += "," + subject.StringRepresentation + ")";
                 subject = subject.Right;
             }
             result = "(" + result + "," + subject + ")";
@@ -115,7 +120,7 @@ namespace Kombinator.Models
 
         public bool HasRedex => !(Right is VoidTerm);
 
-        public virtual Term Reduce() => this;
+        public virtual ReductionResult TryReduce() => new ReductionResult(this);
 
         private static Term Terminate(Term term)
         {

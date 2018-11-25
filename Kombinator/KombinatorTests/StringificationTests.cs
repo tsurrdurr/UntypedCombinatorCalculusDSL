@@ -66,5 +66,22 @@ namespace KombinatorTests
             });
         }
 
+        [Test]
+        public void StringifyLongTerm_Input5ElementArrayv2_Returns5ElementTermRepresentation()
+        {
+            var kTerm = CombinatorK.ConstructCombinator();
+            var kTerm1 = CombinatorK.ConstructCombinator();
+
+            string name3 = "rumba";
+            var term3 = new Constant(name3);
+            string name4 = "spinner";
+            var term4 = new Constant(name4);
+            string name5 = "vape";
+            var term5 = new Constant(name5);
+            var expected = $"((((K,K),{name3}),{name4}),{name5})";
+            var result = Term.BuildWith(new Term[]
+                {kTerm, kTerm1, term3, term4, term5});
+            Assert.AreEqual(expected, result.Stringify());
+        }
     }
 }
