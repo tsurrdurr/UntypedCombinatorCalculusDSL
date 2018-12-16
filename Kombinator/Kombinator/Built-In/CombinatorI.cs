@@ -7,25 +7,24 @@ using Kombinator.Models;
 
 namespace Kombinator.Built_In
 {
-    public class CombinatorI
+    public class CombinatorI : ICombinator
     {
         public static Term ConstructCombinator()
         {
             var iCombinator = new Applica("I", null)
             {
-                Action = Action
+                Action = Action,
+                ArgumentsNumber = ArgumentsNumber
             };
             return iCombinator;
         }
 
-        public static ReductionResult Action(Term term)
+        public static ReductionResult Action(Term term, Stack<Term> arguments)
         {
-            if (term.HasRedex)
-            {
-                var newTerm = term.Right;
-                return new ReductionResult(newTerm, true);
-            }
-            else return new ReductionResult(term);
+            var newTerm = arguments.Pop();
+            return new ReductionResult(newTerm, true);
         }
+
+        public static uint ArgumentsNumber => 1;
     }
 }

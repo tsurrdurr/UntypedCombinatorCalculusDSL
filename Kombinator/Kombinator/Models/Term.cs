@@ -3,51 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kombinator.Logic;
 using Kombinator.Traceability;
 
 namespace Kombinator.Models
 {
     public class Term
     {
-        public Term Left
-        {
-            get => _left ?? (_left = new Term());
-            set
-            {
-                _left = value;
-            }
-        }
+        public Term Left { get; set; }
 
         public Term Right { get; set; }
 
-        private Term _left;
-        protected string StringRepresentation = "";
-        protected string TestRepresentation => "(" + Left + "," + Right + ")";
+        public Term Parent { get; set; }
+
+        public string StringRepresentation = "";
+        public string TestRepresentation => "(" + Left + "," + Right + ")";
         protected object ContainedObject;
 
         public Term(Term leftTerm, Term rightTerm)
         {
             this.Left = leftTerm;
             this.Right = rightTerm;
+            SetParent();
             this.StringRepresentation = "(" + leftTerm + "," + rightTerm + ")";
             MyLogger.Log("Term 2 args invoked");
         }
 
         protected Term(string name)
         {
-            StringRepresentation = name;
+            StringRepresentation =  name;
             if (this is VoidTerm == false) Right = new VoidTerm();
+            SetParent();
         }
 
         protected Term(object value)
         {
             StringRepresentation = value.ToString();
             ContainedObject = value;
+            if (this is VoidTerm == false) Right = new VoidTerm();
+            SetParent();
+        }
+
+        public Term SurgeryOnATerm(Term term, Term newRight)
+        {
+
+            var result = new Term(term, newRight);
+            
+            term.Parent = newRight.Parent;
+            return result;
         }
 
         private Term()
         {
             this.Left = this.Right = null;
+        }
+
+        private void SetParent()
+        {
+            if (Left != null) Left.Parent = this;
+            if (Right != null) Right.Parent = this;
         }
 
         public static Term BuildWith(Term[] args)
@@ -56,6 +70,7 @@ namespace Kombinator.Models
             if (firstElement == null) return new VoidTerm();
             var rootEntity = new Term(firstElement, new VoidTerm());
             AppendRecursively(ref rootEntity, args);
+            rootEntity.Parent = new VoidTerm();
             return rootEntity;
         }
 
@@ -67,11 +82,13 @@ namespace Kombinator.Models
                 if (term.Right is VoidTerm)
                 {
                     term.Right = remainingArgs[0];
+                    term.Right.Parent = term;
                     term.StringRepresentation = term.TestRepresentation;
                 }
                 else
                 {
                     term = new Term(term, remainingArgs[0]);
+                    term.Parent = term;
                     term.StringRepresentation = term.TestRepresentation;
                 }
                 AppendRecursively(ref term, remainingArgs);
@@ -83,29 +100,11 @@ namespace Kombinator.Models
         public static Term EvaluateWith(Term[] args)
         {
             var builtTerm = BuildWith(args);
-            PerformRecursiveReduction(ref builtTerm);
-            MyLogger.Log(builtTerm.Stringify());
-            return builtTerm;
+            var result = new Reductor(builtTerm).Reduce();
+            MyLogger.Log(result.Stringify()); 
+            return result;
         }
 
-        private static Term PerformRecursiveReduction(ref Term pointer)
-        {
-            if (pointer.HasRedex)
-            {
-                var result = pointer.TryReduce();
-                if (result.Success)
-                {
-                    pointer = result.ResultTerm;
-                    PerformRecursiveReduction(ref pointer);
-                }
-                else
-                {
-                    var newPointer = pointer.Right;
-                    pointer.Right = PerformRecursiveReduction(ref newPointer);
-                }
-            }
-            return pointer;
-        }
 
         public override string ToString() => StringRepresentation;
 
@@ -131,7 +130,7 @@ namespace Kombinator.Models
                 return result = "(" + subject + ",())";
             }
 
-            if (subject is VoidTerm == false)
+            if (subject is VoidTerm == false && subject != null)
             {
                 while (subject.HasRedex)
                 {
@@ -150,9 +149,21 @@ namespace Kombinator.Models
             return this;
         }
 
-        public bool HasRedex => !(Right is VoidTerm);
+        public bool HasRedex
+        {
+            get
+            {
+                if (Parent.Right == this)
+                {
+                    if (Parent.Parent.Right is VoidTerm || Parent.Parent.Right == null) return false;
+                    return true;
+                }
+                else return !(Parent.Right is VoidTerm);
+            }
+        }
+        //!(Parent.Right is VoidTerm && Parent.Right != this) || !(Parent.Parent.Right is VoidTerm || Parent.Parent.Right == null);
 
-        public virtual ReductionResult TryReduce() => new ReductionResult(this);
+        public virtual ReductionResult Reduce(Stack<Term> args = null) => new ReductionResult(this);
 
         private static Term Terminate(Term term)
         {

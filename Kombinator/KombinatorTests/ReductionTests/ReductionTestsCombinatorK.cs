@@ -19,7 +19,7 @@ namespace KombinatorTests.ReductionTests
         {
             var term1 = CombinatorK.ConstructCombinator();
             var expected = term1.Stringify();
-            var reductionResult = Term.BuildWith(new Term[] { term1 }).TryReduce();
+            var reductionResult = Term.BuildWith(new Term[] { term1 }).Reduce();
             var result = term1.Stringify();
             Assert.AreEqual(expected, result);
         }
@@ -33,13 +33,38 @@ namespace KombinatorTests.ReductionTests
             string name3 = "lupa";
             var term3 = new Constant(name3);
             var expected = Term.BuildWith(new Term[] { term2 }).Stringify();
-            var resultTerm = Term.BuildWith(new Term[]
-            { kTerm, term2, term3 });
-            var reductionResult = resultTerm.TryReduce();
-            var result = (Term) reductionResult.ResultTerm;
-            var resultStr = result.Stringify();
+            var reductionResult = Term.EvaluateWith(new Term[] { kTerm, term2, term3 });
+            var resultStr = reductionResult.Stringify();
 
             Assert.AreEqual(expected, resultStr);
+        }
+
+        [Test]
+        public void TermReductionTest_InputNonLinearTerm_ReturnsCorrectlyRecudedTerm()
+        {
+            var name2 = "kyle";
+            var name3 = "jacquline";
+            var name4 = "trish";
+            var kTerm = CombinatorK.ConstructCombinator();
+            var termKyle = new Constant(name2);
+            var expected = Term.BuildWith(new Term[] { new Term(new Constant(name3), new Constant(name4))}).Stringify();
+            var termTwins = new Term(new Constant(name3), new Constant(name4));
+            var term = Term.EvaluateWith(new Term[] {kTerm, termTwins, termKyle});
+            Assert.AreEqual(expected, term.ToString());
+        }
+
+        [Test]
+        public void TermReductionTest_InputNonLinearTermAltOrder_ReturnsCorrectlyRecudedTerm()
+        {
+            var name2 = "kyle";
+            var name3 = "jacquline";
+            var name4 = "trish";
+            var kTerm = CombinatorK.ConstructCombinator();
+            var termKyle = new Constant(name2);
+            var expected = Term.BuildWith(new Term[] { termKyle }).Stringify();
+            var termTwins = new Term(new Constant(name3), new Constant(name4));
+            var term = Term.EvaluateWith(new Term[] { kTerm, termKyle, termTwins});
+            Assert.AreEqual(expected, term.ToString());
         }
 
         [Test]

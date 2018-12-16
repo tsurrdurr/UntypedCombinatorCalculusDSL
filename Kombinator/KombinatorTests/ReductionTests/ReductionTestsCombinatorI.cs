@@ -35,8 +35,8 @@ namespace KombinatorTests.ReductionTests
 
             var extepctedResult = Term.BuildWith(new Term[] { term2 });
             var expected = extepctedResult.Stringify();
-            var reductionResult = Term.BuildWith(new Term[] { term1, term2 }).TryReduce();
-            var result = reductionResult.ResultTerm.Stringify();
+            var reductionResult = Term.EvaluateWith(new Term[] { term1, term2 });
+            var result = reductionResult.Stringify();
             Assert.AreEqual(expected, result);
         }
 
