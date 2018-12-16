@@ -71,6 +71,10 @@ namespace Kombinator.Models
             var rootEntity = new Term(firstElement, new VoidTerm());
             AppendRecursively(ref rootEntity, args);
             rootEntity.Parent = new VoidTerm();
+            if (rootEntity.Right is VoidTerm)
+            {
+                if (!(rootEntity.Left.Right is VoidTerm)) return rootEntity.Left;
+            }
             return rootEntity;
         }
 
