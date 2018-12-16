@@ -21,17 +21,17 @@ namespace Kombinator.Logic
         public Reductor(Term builtTerm)
         {
             this.node = TreeTraversal.GetLowestLeftNode(builtTerm);
-            
         }
 
         public Term Reduce()
         {
             while (node.HasRedex)
             {
-                var resuctionResult = TryApply(node);
+                var reductionResult = TryApply(node);
                 if (needsSurgery)
                 {
-                    node = SurgeryOnATerm(resuctionResult, TreeTraversal.GetNextNodeLRP(node));
+                    node = SurgeryOnATerm(reductionResult, TreeTraversal.GetNextNodeLRP(node));
+                    node = TreeTraversal.GetLowestLeftNode(node.Parent);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Kombinator.Logic
             if (needsSurgery)
             {
                 var formerNode = (Term) currentApplica;
-                if (formerNode == TreeTraversal.GetLowestLeftNode(formerNode))
+                if (formerNode == TreeTraversal.GetLowestLeftNode(formerNode.Parent))
                 {
                     if (!(result.Right is VoidTerm))
                     {
