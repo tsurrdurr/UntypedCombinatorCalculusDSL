@@ -14,7 +14,7 @@ Term "Kxy" as a tree:
 Term "xz(yz)" as a tree:  
 ![alt text](.//Docs/xz(yz).svg "xz(yz)")  
 
-## DSL models and funcionality ##
+## DSL models and functionality ##
 
 ### Short description of models used to build expressions: ###  
 - `Term`: base class representing any kind of term. 
@@ -47,7 +47,7 @@ Code of term models can be found in `Models\Term` folder of the `Kombinator` pro
 
 ### Combinators ###
 Current version ships with 3 classes `CombinatorI`, `CombinatorK`, `CombinatorS`, each implementing public static method `ConstructCombinator()` with return type `Applica`, constructing I, K and S combinator objects respectively.  
-You can create your own combinators or objects of similar nature by defining their `Action` and `ArgumentNumbe`. in order to do this you have to create an `Applica` object and invoke its public instance method:  
+You can create your own combinators or objects of similar nature by defining their `Action` and `ArgumentsNumber`. in order to do this you have to create an `Applica` object and invoke its public instance method:  
 `public void SetFunctionality(Func<Applica, Stack<Term>, ReductionResult> action, uint argumentsNumber)`  
 where first argument is a function that takes a stack of arguments and returns an object of type `ReductionResult`, that encapsulates the resulting `Term` object.  
 
