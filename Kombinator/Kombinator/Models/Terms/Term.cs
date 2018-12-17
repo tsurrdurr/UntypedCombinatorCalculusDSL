@@ -57,7 +57,7 @@ namespace Kombinator.Models
 
         public static Term BuildWith(Term[] args)
         {
-            var firstElement = args.FirstOrDefault();
+            var firstElement = args.FirstOrDefault()?.Clone();
             if (firstElement == null) return new VoidTerm();
             var rootEntity = new Term(firstElement, new VoidTerm());
             AppendRecursively(ref rootEntity, args);
@@ -76,13 +76,13 @@ namespace Kombinator.Models
             {
                 if (term.Right is VoidTerm)
                 {
-                    term.Right = remainingArgs[0];
+                    term.Right = remainingArgs[0].Clone();
                     term.Right.Parent = term;
                     term.StringRepresentation = term.DynamicStringRepresentation;
                 }
                 else
                 {
-                    term = new Term(term, remainingArgs[0]);
+                    term = new Term(term, remainingArgs[0].Clone());
                     term.Parent = term;
                     term.StringRepresentation = term.DynamicStringRepresentation;
                 }
@@ -111,7 +111,7 @@ namespace Kombinator.Models
 
         public Term Dump()
         {
-            MyLogger.Log(Stringify());
+            Console.WriteLine(Stringify());
             return this;
         }
 

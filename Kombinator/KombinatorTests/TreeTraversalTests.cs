@@ -21,7 +21,7 @@ namespace KombinatorTests
             var startingTermsList = new Term[] { kTerm,};
             var term = Term.BuildWith(startingTermsList);
             var result = TreeTraversal.GetLowestLeftNode(term);
-            Assert.AreEqual(result, kTerm);
+            Assert.AreEqual(result.Stringify(), kTerm.Stringify());
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace KombinatorTests
             var startingTermsList = new Term[] { kTerm, kTerm1, term3, term4, term5 };
             var term = Term.BuildWith(startingTermsList);
             var result = TreeTraversal.GetLowestLeftNode(term);
-            Assert.AreEqual(result, kTerm);
+            Assert.AreEqual(result.Stringify(), kTerm.Stringify());
         }
 
         [Test]
@@ -65,10 +65,10 @@ namespace KombinatorTests
             }
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(iTerm, result[0]);
-                Assert.AreEqual(term3, result[1]);
-                Assert.AreEqual(term4, result[2]);
-                Assert.AreEqual(term5, result[3]);
+                Assert.AreEqual(iTerm.Stringify(), result[0].Stringify());
+                Assert.AreEqual(term3.Stringify(), result[1].Stringify());
+                Assert.AreEqual(term4.Stringify(), result[2].Stringify());
+                Assert.AreEqual(term5.Stringify(), result[3].Stringify());
 
             });
 

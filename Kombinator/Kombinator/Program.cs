@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kombinator.Built_In;
 using Kombinator.Models;
+using Kombinator.Traceability;
 
 namespace Kombinator
 {
@@ -14,6 +15,7 @@ namespace Kombinator
 
         static void Main(string[] args)
         {
+            MyLogger.Enabled = false;
             var K = CombinatorK.ConstructCombinator();
             var one = new Constant("1");
             var two = new Constant("2");

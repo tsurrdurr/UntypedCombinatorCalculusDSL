@@ -9,7 +9,11 @@ namespace Kombinator.Traceability
 {
     public static class MyLogger
     {
-        public static bool enabled = false;
-        public static void Log(string text) => Console.WriteLine(text);
+        public static bool Enabled = false;
+
+        public static void Log(string text)
+        {
+            if(Enabled) Console.WriteLine(text);
+        }
     }
 }
