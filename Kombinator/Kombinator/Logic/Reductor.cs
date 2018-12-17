@@ -11,38 +11,35 @@ namespace Kombinator.Logic
 {
     public class Reductor
     {
-        private Term node;
-        private Stack<Term> argumentsStack = new Stack<Term>();
-        private bool gatheringArgumentsMode = false;
-        private bool needsSurgery = false;
-        private uint argsRequired = 0;
-        private Applica currentApplica = null;
+        private Term currentNode;
+        private readonly Stack<Term> argumentsStack = new Stack<Term>();
+        private readonly ReductionStatus currentStatus;
 
         public Reductor(Term builtTerm)
         {
-            this.node = TreeTraversal.GetLowestLeftNode(builtTerm);
+            this.currentNode = TreeTraversal.GetLowestLeftNode(builtTerm);
+            this.currentStatus = new ReductionStatus();
         }
 
         public Term Reduce()
         {
-            while (node.HasRedex)
+            while (currentNode.HasRedex)
             {
-                var reductionResult = TryApply(node);
-                if (needsSurgery)
+                var reductionResult = TryApply(currentNode);
+                if (currentStatus.NeedsSurgery)
                 {
-                    node = SurgeryOnATerm(reductionResult, TreeTraversal.GetNextNodeLRP(node));
-                    node = TreeTraversal.GetLowestLeftNode(node.Parent);
+                    currentNode = SpliceApplicationResultWithTerm(reductionResult, TreeTraversal.GetNextNodeLRP(currentNode));
+                    currentNode = TreeTraversal.GetLowestLeftNode(currentNode.Parent);
                 }
                 else
                 {
-                    node = TreeTraversal.GetNextNodeLRP(node);
+                    currentNode = TreeTraversal.GetNextNodeLRP(currentNode);
                 }
             }
-            var result = TryApply(node);
-
-            if (needsSurgery)
+            var result = TryApply(currentNode);
+            if (currentStatus.NeedsSurgery)
             {
-                var formerNode = (Term) currentApplica;
+                var formerNode = (Term)currentStatus.CurrentApplica;
                 if (formerNode == TreeTraversal.GetLowestLeftNode(formerNode.Parent))
                 {
                     if (!(result.Right is VoidTerm))
@@ -55,7 +52,6 @@ namespace Kombinator.Logic
                         formerNode.Parent.Left = result;
                         formerNode.Parent.Right = new VoidTerm();
                     }
-
                 }
                 else
                 {
@@ -64,44 +60,40 @@ namespace Kombinator.Logic
                 TreeTraversal.RenewRepresentation(formerNode);
                 return formerNode.Parent;
             }
-            return new Term(node, new VoidTerm());
-        }
-
-        private Term SurgeryOnATerm(Term term, Term getNextNodeLrp)
-        {
-            getNextNodeLrp.Parent.Left = term;
-            term.Parent = getNextNodeLrp.Parent;
-            TreeTraversal.RenewRepresentation(term);
-            needsSurgery = false;
-            return getNextNodeLrp;
+            return new Term(currentNode, new VoidTerm());
         }
 
         private Term TryApply(Term addingNode)
         {
             bool isApplica = addingNode is Applica;
-            if (gatheringArgumentsMode)
+            if (currentStatus.GatheringArgumentsMode)
             {
-                if (argumentsStack.Count + 1 >= argsRequired)
+                if (argumentsStack.Count + 1 >= currentStatus.NumberOfArgsRequired)
                 {
                     argumentsStack.Push(addingNode);
-                    var result = currentApplica.ReduceApplica(argumentsStack);
-                    gatheringArgumentsMode = false;
-                    needsSurgery = true;
-                    argsRequired = 0;
+                    var result = currentStatus.CurrentApplica.ReduceApplica(argumentsStack);
+                    currentStatus.SetJustAppliedState();
                     return result.ResultTerm;
                 }
-                argumentsStack.Push(node);
+                argumentsStack.Push(currentNode);
             }
             else
             {
                 if (isApplica)
                 {
-                    gatheringArgumentsMode = true;
-                    currentApplica = addingNode as Applica;
-                    argsRequired = currentApplica.ArgumentsNumber;
+                    currentStatus.EnterApplicaMode(addingNode);
                 }
             }
             return addingNode;
+        }
+
+        private Term SpliceApplicationResultWithTerm(Term term, Term nextNode)
+        {
+            nextNode.Parent.Left = term;
+            term.Parent = nextNode.Parent;
+            TreeTraversal.RenewRepresentation(term);
+            currentStatus.NeedsSurgery = false;
+            return nextNode;
         }
     }
 }
