@@ -9,7 +9,7 @@ namespace Kombinator.Built_In
 {
     public class CombinatorK
     {
-        public static Term ConstructCombinator()
+        public static Applica ConstructCombinator()
         {
             var kCombinator = new Applica("K");
             kCombinator.SetFunctionality(Action, ArgumentsNumber);
