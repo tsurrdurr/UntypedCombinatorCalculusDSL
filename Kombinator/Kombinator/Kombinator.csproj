@@ -51,14 +51,14 @@
     <Compile Include="Built-In\CombinatorS.cs" />
     <Compile Include="Logic\Reductor.cs" />
     <Compile Include="Logic\TreeTraversal.cs" />
-    <Compile Include="Models\Applica.cs" />
-    <Compile Include="Models\Constant.cs" />
+    <Compile Include="Models\Terms\Applica.cs" />
+    <Compile Include="Models\Terms\Constant.cs" />
     <Compile Include="Models\ReductionResult.cs" />
     <Compile Include="Models\ReductionStatus.cs" />
-    <Compile Include="Models\Variable.cs" />
-    <Compile Include="Models\VoidTerm.cs" />
+    <Compile Include="Models\Terms\Variable.cs" />
+    <Compile Include="Models\Terms\VoidTerm.cs" />
     <Compile Include="Traceability\MyLogger.cs" />
-    <Compile Include="Models\Term.cs" />
+    <Compile Include="Models\Terms\Term.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
