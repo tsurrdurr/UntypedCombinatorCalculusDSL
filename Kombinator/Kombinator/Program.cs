@@ -22,5 +22,11 @@ namespace Kombinator
             var stmt2 = Term.EvaluateWith(new Term[] { K, one, two }).Dump();
             Console.ReadKey();
         }
+
+        private void Demonstration()
+        {
+            var variable = new Variable("x");
+            
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace Kombinator.Logic
             lowestLeft = GetLowestLeftNode(lowestLeft);
             while (!(lowestLeft is VoidTerm))
             {
-                lowestLeft.Parent.StringRepresentation = lowestLeft.Parent.DymanicStringRepresentation;
+                lowestLeft.RenewStringRepresentation();
                 lowestLeft = GetNextNodeLRP(lowestLeft);
             }
         }

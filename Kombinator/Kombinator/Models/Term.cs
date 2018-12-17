@@ -16,8 +16,8 @@ namespace Kombinator.Models
 
         public Term Parent { get; set; }
 
-        public string StringRepresentation = "";
-        public string DymanicStringRepresentation => "(" + Left + "," + Right + ")";
+        protected string StringRepresentation = "";
+        protected string DynamicStringRepresentation => "(" + Left + "," + Right + ")";
         protected object ContainedObject;
 
         public Term(Term leftTerm, Term rightTerm)
@@ -78,13 +78,13 @@ namespace Kombinator.Models
                 {
                     term.Right = remainingArgs[0];
                     term.Right.Parent = term;
-                    term.StringRepresentation = term.DymanicStringRepresentation;
+                    term.StringRepresentation = term.DynamicStringRepresentation;
                 }
                 else
                 {
                     term = new Term(term, remainingArgs[0]);
                     term.Parent = term;
-                    term.StringRepresentation = term.DymanicStringRepresentation;
+                    term.StringRepresentation = term.DynamicStringRepresentation;
                 }
                 AppendRecursively(ref term, remainingArgs);
             }
@@ -99,7 +99,6 @@ namespace Kombinator.Models
             return result;
         }
 
-
         public override string ToString() => StringRepresentation;
 
         public Term Clone()
@@ -108,7 +107,7 @@ namespace Kombinator.Models
         }
 
 
-        public string Stringify() => DymanicStringRepresentation;
+        public string Stringify() => DynamicStringRepresentation;
 
         public Term Dump()
         {
@@ -136,6 +135,10 @@ namespace Kombinator.Models
             return result;
         }
 
+        public void RenewStringRepresentation()
+        {
+             this.Parent.StringRepresentation = this.Parent.DynamicStringRepresentation;
+        }
     }
 
 }
