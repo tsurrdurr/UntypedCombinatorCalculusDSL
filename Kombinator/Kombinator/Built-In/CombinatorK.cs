@@ -11,11 +11,8 @@ namespace Kombinator.Built_In
     {
         public static Term ConstructCombinator()
         {
-            var kCombinator = new Applica("K")
-            {
-                Action = Action,
-                ArgumentsNumber = ArgumentsNumber
-            };
+            var kCombinator = new Applica("K");
+            kCombinator.SetFunctionality(Action, ArgumentsNumber);
             return kCombinator;
         }
 

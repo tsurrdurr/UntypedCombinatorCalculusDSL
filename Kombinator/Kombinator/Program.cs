@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kombinator.Built_In;
 using Kombinator.Models;
 
 namespace Kombinator
@@ -14,7 +15,7 @@ namespace Kombinator
         static void Main(string[] args)
         {
             var K = new Applica("K");
-            K.Action = Built_In.CombinatorK.Action;
+            K.SetFunctionality(CombinatorK.Action, CombinatorK.ArgumentsNumber);
             var one = new Constant("1");
             var two = new Constant("2");
 
