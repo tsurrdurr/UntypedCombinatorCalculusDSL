@@ -7,7 +7,7 @@ using Kombinator.Models;
 
 namespace Kombinator.Built_In
 {
-    public class CombinatorK : ICombinator
+    public class CombinatorK
     {
         public static Term ConstructCombinator()
         {

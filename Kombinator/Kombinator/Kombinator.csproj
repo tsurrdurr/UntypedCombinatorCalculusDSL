@@ -53,7 +53,6 @@
     <Compile Include="Logic\TreeTraversal.cs" />
     <Compile Include="Models\Applica.cs" />
     <Compile Include="Models\Constant.cs" />
-    <Compile Include="Models\ICombinator.cs" />
     <Compile Include="Models\ReductionResult.cs" />
     <Compile Include="Models\ReductionStatus.cs" />
     <Compile Include="Models\Variable.cs" />
