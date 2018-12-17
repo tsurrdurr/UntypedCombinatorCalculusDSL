@@ -16,7 +16,7 @@ namespace Kombinator.Models
             Right = argument ?? Right;
         }
 
-        public override ReductionResult Reduce(Stack<Term> args) => Action(this, args);
+        public ReductionResult ReduceApplica(Stack<Term> args) => Action(this, args);
 
         public uint ArgumentsNumber { get; set; }
     }

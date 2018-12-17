@@ -17,7 +17,7 @@ namespace Kombinator.Models
         public Term Parent { get; set; }
 
         public string StringRepresentation = "";
-        public string TestRepresentation => "(" + Left + "," + Right + ")";
+        public string DymanicStringRepresentation => "(" + Left + "," + Right + ")";
         protected object ContainedObject;
 
         public Term(Term leftTerm, Term rightTerm)
@@ -42,15 +42,6 @@ namespace Kombinator.Models
             ContainedObject = value;
             if (this is VoidTerm == false) Right = new VoidTerm();
             SetParent();
-        }
-
-        public Term SurgeryOnATerm(Term term, Term newRight)
-        {
-
-            var result = new Term(term, newRight);
-            
-            term.Parent = newRight.Parent;
-            return result;
         }
 
         private Term()
@@ -87,13 +78,13 @@ namespace Kombinator.Models
                 {
                     term.Right = remainingArgs[0];
                     term.Right.Parent = term;
-                    term.StringRepresentation = term.TestRepresentation;
+                    term.StringRepresentation = term.DymanicStringRepresentation;
                 }
                 else
                 {
                     term = new Term(term, remainingArgs[0]);
                     term.Parent = term;
-                    term.StringRepresentation = term.TestRepresentation;
+                    term.StringRepresentation = term.DymanicStringRepresentation;
                 }
                 AppendRecursively(ref term, remainingArgs);
             }
@@ -104,8 +95,7 @@ namespace Kombinator.Models
         public static Term EvaluateWith(Term[] args)
         {
             var builtTerm = BuildWith(args);
-            var result = new Reductor(builtTerm).Reduce();
-            MyLogger.Log(result.Stringify()); 
+            var result = builtTerm.Reduce();
             return result;
         }
 
@@ -118,34 +108,7 @@ namespace Kombinator.Models
         }
 
 
-        public string Stringify()
-        {
-            return this.TestRepresentation;
-            string result = "";
-            var subject = this;
-            if (subject is VoidTerm) return "()";
-            if (subject.HasRedex)
-            {
-                result += "(" + subject + "," + subject.Right + ")";
-                subject = subject.Right.Right;
-            }
-            else
-            {
-                return result = "(" + subject + ",())";
-            }
-
-            if (subject is VoidTerm == false && subject != null)
-            {
-                while (subject.HasRedex)
-                {
-                    result = "(" + result;
-                    result += "," + subject.StringRepresentation + ")";
-                    subject = subject.Right;
-                }
-                result = "(" + result + "," + subject + ")";
-            }
-            return result;
-        }
+        public string Stringify() => DymanicStringRepresentation;
 
         public Term Dump()
         {
@@ -165,19 +128,14 @@ namespace Kombinator.Models
                 else return !(Parent.Right is VoidTerm);
             }
         }
-        //!(Parent.Right is VoidTerm && Parent.Right != this) || !(Parent.Parent.Right is VoidTerm || Parent.Parent.Right == null);
 
-        public virtual ReductionResult Reduce(Stack<Term> args = null) => new ReductionResult(this);
-
-        private static Term Terminate(Term term)
+        public Term Reduce()
         {
-            if (term.Right == null)
-            {
-                term.Right = new VoidTerm();
-            }
-            else throw new ArgumentException($"{nameof(Term.Terminate)} - term provided has value in its right slot and is not terminal.");
-            return term;
+            var result = new Reductor(this).Reduce();
+            MyLogger.Log(result.Stringify());
+            return result;
         }
+
     }
 
 }

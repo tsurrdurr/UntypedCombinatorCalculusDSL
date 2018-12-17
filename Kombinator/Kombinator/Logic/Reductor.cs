@@ -84,7 +84,7 @@ namespace Kombinator.Logic
                 if (argumentsStack.Count + 1 >= argsRequired)
                 {
                     argumentsStack.Push(addingNode);
-                    var result = currentApplica.Reduce(argumentsStack);
+                    var result = currentApplica.ReduceApplica(argumentsStack);
                     gatheringArgumentsMode = false;
                     needsSurgery = true;
                     argsRequired = 0;
