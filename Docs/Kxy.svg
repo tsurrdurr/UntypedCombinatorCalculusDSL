@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Создано Microsoft Visio, экспорт SVG Kxy.svg Страница-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="2.57989in" height="2.77674in"
+		viewBox="0 0 185.752 199.925" xml:space="preserve" color-interpolation-filters="sRGB" class="st4">
+	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:url(#grad0-4);stroke:#4f87bb;stroke-width:0.75}
+		.st2 {fill:#4f87bb;font-family:Calibri;font-size:0.75em}
+		.st3 {stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st4 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Patterns_And_Gradients">
+		<linearGradient id="grad0-4" x1="0" y1="0" x2="1" y2="0" gradientTransform="rotate(60 0.5 0.5)">
+			<stop offset="0" stop-color="#e9eff7" stop-opacity="1"/>
+			<stop offset="0.24" stop-color="#f4f7fb" stop-opacity="1"/>
+			<stop offset="0.54" stop-color="#feffff" stop-opacity="1"/>
+		</linearGradient>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Страница-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(0.75,-0.75)">
+			<title>Круг</title>
+			<desc>K</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="21.2598" cy="178.665" width="37.21" height="31.8898"/>
+			<path d="M0 178.67 A21.2598 21.2598 0 0 1 42.52 178.67 A21.2598 21.2598 0 1 1 0 178.67 Z" class="st1"/>
+			<text x="18.92" y="181.37" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>K</text>		</g>
+		<g id="shape2-6" v:mID="2" v:groupContext="shape" transform="translate(78.7028,-0.75)">
+			<title>Круг.2</title>
+			<desc>x</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="21.2598" cy="178.665" width="37.21" height="31.8898"/>
+			<path d="M0 178.67 A21.2598 21.2598 0 0 1 42.52 178.67 A21.2598 21.2598 0 1 1 0 178.67 Z" class="st1"/>
+			<text x="19.31" y="181.37" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>x</text>		</g>
+		<g id="shape3-10" v:mID="3" v:groupContext="shape" transform="translate(39.7264,-71.6161)">
+			<title>Круг.3</title>
+			<desc>(K,x)</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="21.2598" cy="178.665" width="37.21" height="31.8898"/>
+			<path d="M0 178.67 A21.2598 21.2598 0 0 1 42.52 178.67 A21.2598 21.2598 0 1 1 0 178.67 Z" class="st1"/>
+			<text x="13.12" y="181.37" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>(K,x)</text>		</g>
+		<g id="shape5-14" v:mID="5" v:groupContext="shape" transform="translate(-142.351,42.8323) rotate(-55.2965)">
+			<title>Лист.5</title>
+			<path d="M0 199.93 L42.05 199.93" class="st3"/>
+		</g>
+		<g id="shape6-17" v:mID="6" v:groupContext="shape" transform="translate(-64.3978,270.479) rotate(-124.703)">
+			<title>Лист.6</title>
+			<path d="M0 199.93 L42.05 199.93" class="st3"/>
+		</g>
+		<g id="shape7-20" v:mID="7" v:groupContext="shape" transform="translate(142.482,-71.6161)">
+			<title>Круг.7</title>
+			<desc>y</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="21.2598" cy="178.665" width="37.21" height="31.8898"/>
+			<path d="M0 178.67 A21.2598 21.2598 0 0 1 42.52 178.67 A21.2598 21.2598 0 1 1 0 178.67 Z" class="st1"/>
+			<text x="19.22" y="181.37" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>y</text>		</g>
+		<g id="shape8-24" v:mID="8" v:groupContext="shape" transform="translate(92.876,-156.656)">
+			<title>Круг.8</title>
+			<desc>((K,x),y)</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="21.2598" cy="178.665" width="37.21" height="31.8898"/>
+			<path d="M0 178.67 A21.2598 21.2598 0 0 1 42.52 178.67 A21.2598 21.2598 0 1 1 0 178.67 Z" class="st1"/>
+			<text x="7.23" y="181.37" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>((K,x),y)</text>		</g>
+		<g id="shape9-28" v:mID="9" v:groupContext="shape" transform="translate(-96.508,-37.3595) rotate(-51.9772)">
+			<title>Лист.9</title>
+			<path d="M0 199.93 L61.88 199.93" class="st3"/>
+		</g>
+		<g id="shape10-31" v:mID="10" v:groupContext="shape" transform="translate(0.667632,201.447) rotate(-125.346)">
+			<title>Лист.10</title>
+			<path d="M0 199.93 L59.76 199.93" class="st3"/>
+		</g>
+	</g>
+</svg>

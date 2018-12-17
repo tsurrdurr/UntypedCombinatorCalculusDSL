@@ -17,9 +17,10 @@ namespace Kombinator
             var K = CombinatorK.ConstructCombinator();
             var one = new Constant("1");
             var two = new Constant("2");
-
+            Console.WriteLine($"{K},{one},{two}");
             var stmt = Term.BuildWith(new Term[] { K, one, two }).Dump();
             var stmt2 = Term.EvaluateWith(new Term[] { K, one, two }).Dump();
+            var stmt3 = stmt.Reduce().Dump();
             Console.ReadKey();
         }
 
