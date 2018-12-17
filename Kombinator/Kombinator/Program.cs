@@ -13,7 +13,7 @@ namespace Kombinator
 
         static void Main(string[] args)
         {
-            var K = new Applica("K", null);
+            var K = new Applica("K");
             K.Action = Built_In.CombinatorK.Action;
             var one = new Constant("1");
             var two = new Constant("2");
@@ -26,7 +26,10 @@ namespace Kombinator
         private void Demonstration()
         {
             var variable = new Variable("x");
-            
+            var variable2 = new Variable("y");
+            var term = new Term(variable, variable2);
+
+            //variable.
         }
     }
 }
