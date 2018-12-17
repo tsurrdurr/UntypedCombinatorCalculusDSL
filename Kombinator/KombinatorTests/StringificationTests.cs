@@ -97,5 +97,20 @@ namespace KombinatorTests
             var result = Term.BuildWith(new Term[] { superterm1, superterm2 }).Stringify();
             Assert.AreEqual(expected, result);
         }
+
+        [Test]
+        public void StringifyComplexTerm_Input2TermsAndTuple_ReturnsCorrectStringificaion()
+        {
+            var term2 = new Constant("x");
+            var term2a = new Constant("x");
+            var term3 = new Constant("y");
+            var term4 = new Constant("z");
+            var term4a = new Constant("z");
+            var tupleX = new Term(term2, term2a);
+            var tupleYZ = new Term(term3, term4a);
+            var expected = $"(({tupleX},{term4}),({term3},{term4a}))"; //(((x,x),z),(y,z))
+            var result = Term.BuildWith(new Term[] { tupleX, term4, tupleYZ }).Stringify();
+            Assert.AreEqual(expected, result);
+        }
     }
 }

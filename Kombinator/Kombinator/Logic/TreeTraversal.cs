@@ -43,5 +43,15 @@ namespace Kombinator.Logic
                 lowestLeft = GetNextNodeLRP(lowestLeft);
             }
         }
+
+        public static Term GetToplevelTerm(Term term)
+        {
+            while (!(term.Parent is VoidTerm) && term.Parent != null)
+            {
+                term = term.Parent;
+            }
+
+            return term;
+        }
     }
 }

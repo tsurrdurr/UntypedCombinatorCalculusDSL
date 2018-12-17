@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReductionTests\ComplexReductionTest.cs" />
     <Compile Include="ReductionTests\ReductionTestsBasic.cs" />
     <Compile Include="ReductionTests\ReductionTestsCombinatorI.cs" />
     <Compile Include="ReductionTests\ReductionTestsCombinatorK.cs" />

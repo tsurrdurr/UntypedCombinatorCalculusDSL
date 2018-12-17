@@ -112,9 +112,9 @@ namespace Kombinator.Models
 
         public override string ToString() => StringRepresentation;
 
-        public object Clone()
+        public Term Clone()
         {
-            return this.MemberwiseClone();
+            return (Term)this.MemberwiseClone();
         }
 
 
