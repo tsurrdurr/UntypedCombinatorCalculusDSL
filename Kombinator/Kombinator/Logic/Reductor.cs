@@ -13,7 +13,7 @@ namespace Kombinator.Logic
     {
         private Term currentNode;
         private readonly Stack<Term> argumentsStack = new Stack<Term>();
-        private readonly ReductionStatus currentStatus;
+        private ReductionStatus currentStatus;
 
         public Reductor(Term builtTerm)
         {
@@ -45,7 +45,9 @@ namespace Kombinator.Logic
                     if (!(result.Right is VoidTerm))
                     {
                         TreeTraversal.RenewRepresentation(formerNode);
-                        return result;
+                        currentNode = TreeTraversal.GetLowestLeftNode(result);
+                        currentStatus = new ReductionStatus();
+                        return Reduce();
                     }
                     else
                     {
@@ -60,7 +62,16 @@ namespace Kombinator.Logic
                 TreeTraversal.RenewRepresentation(formerNode);
                 return formerNode.Parent;
             }
-            return new Term(currentNode, new VoidTerm());
+
+            var toplevel = TreeTraversal.GetToplevelTerm(currentNode);
+            if (toplevel.Right == null)
+            {
+                return new Term(currentNode, new VoidTerm());
+            }
+            else
+            {
+                return toplevel;
+            }
         }
 
         private Term TryApply(Term addingNode)

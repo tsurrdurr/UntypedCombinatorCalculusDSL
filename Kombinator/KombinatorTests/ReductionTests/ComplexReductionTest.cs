@@ -25,5 +25,18 @@ namespace KombinatorTests.ReductionTests
             var resultTerm = Term.EvaluateWith(new Term[] {S, K1, K2, I, x});
             Assert.AreEqual(expectedTerm.Stringify(), resultTerm.Stringify());
         }
+
+        [Test]
+        public void TermReductionTest_InputSKIX_ReturnsTermX()
+        {
+            var S = CombinatorS.ConstructCombinator();
+            var K = CombinatorK.ConstructCombinator();
+            var I = CombinatorI.ConstructCombinator();
+            var x = new Variable("x");
+            var expectedTerm = Term.BuildWith(new Term[] { x });
+            var resultTerm = Term.EvaluateWith(new Term[] { S, K, I, x });
+            Assert.AreEqual(expectedTerm.Stringify(), resultTerm.Stringify());
+
+        }
     }
 }

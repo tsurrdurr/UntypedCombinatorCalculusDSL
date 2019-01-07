@@ -25,12 +25,13 @@ namespace Kombinator.Built_In
             var bTerm = args.Pop().Clone();
             bTerm.Parent = new VoidTerm();
             var aTerm = args.Pop().Clone();
-            aTerm.Parent = new VoidTerm();
+
+
             var cClone = cTerm.Clone();
             var tupledTermBC = new Term(bTerm, cTerm);
-            bTerm.Parent = tupledTermBC;
-            cTerm.Parent = tupledTermBC;
-            var resultingTerm = Term.BuildWith(new Term[] {aTerm, cClone, tupledTermBC});
+            var tupleTermAC = new Term(aTerm, cClone);
+            var resultingTerm = new Term(tupleTermAC, tupledTermBC);
+
             return new ReductionResult(resultingTerm, true);
         }
 

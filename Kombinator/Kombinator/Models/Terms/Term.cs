@@ -79,6 +79,7 @@ namespace Kombinator.Models
                     term.Right = remainingArgs[0].Clone();
                     term.Right.Parent = term;
                     term.StringRepresentation = term.DynamicStringRepresentation;
+
                 }
                 else
                 {
@@ -121,7 +122,7 @@ namespace Kombinator.Models
             {
                 if (Parent.Right == this)
                 {
-                    if (Parent.Parent.Right is VoidTerm || Parent.Parent.Right == null) return false;
+                    if (Parent?.Parent?.Right == null || Parent.Parent.Right is VoidTerm) return false;
                     return true;
                 }
                 else return !(Parent.Right is VoidTerm);
